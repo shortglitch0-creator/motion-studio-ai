@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Motion Studio AI</title>
+<style>
+body {
+  margin:0;
+  background:#090b16;
+  color:white;
+  font-family:Arial;
+  padding:20px;
+}
+h1 {
+  text-align:center;
+  color:#a78bfa;
+}
+p {color:#aaa;text-align:center}
+.box {
+  background:#171c30;
+  padding:20px;
+  margin:18px 0;
+  border-radius:15px;
+  border:1px solid #343b58;
+}
+input {
+  width:100%;
+  margin-top:15px;
+}
+button {
+  width:100%;
+  padding:16px;
+  border:0;
+  border-radius:12px;
+  background:#7c3aed;
+  color:white;
+  font-size:17px;
+  font-weight:bold;
+}
+video,img {
+  width:100%;
+  margin-top:12px;
+  border-radius:10px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>✨ MOTION STUDIO AI</h1>
+<p>AI Motion Control Video Generator</p>
+
+<div class="box">
+<h3>01. Upload Character Image</h3>
+<input type="file" id="image" accept="image/*">
+<img id="preview" style="display:none">
+</div>
+
+<div class="box">
+<h3>02. Upload Reference Reel</h3>
+<p>Maximum 30 seconds</p>
+<input type="file" id="video" accept="video/*">
+<video id="videoPreview" controls style="display:none"></video>
+</div>
+
+<button onclick="generate()">GENERATE VIDEO ✨</button>
+
+<p id="status"></p>
+
+<script>
+document.getElementById("image").onchange = function(){
+ let file=this.files[0];
+ if(file){
+ let p=document.getElementById("preview");
+ p.src=URL.createObjectURL(file);
+ p.style.display="block";
+ }
+};
+
+document.getElementById("video").onchange = function(){
+ let file=this.files[0];
+ if(file){
+ let v=document.getElementById("videoPreview");
+ v.src=URL.createObjectURL(file);
+ v.style.display="block";
+ v.onloadedmetadata=()=>{
+ if(v.duration>30){
+ alert("Video maximum 30 seconds hona chahiye!");
+ this.value="";
+ v.style.display="none";
+ }
+ };
+ }
+};
+
+async function generate(){
+ let image=document.getElementById("image").files[0];
+ let video=document.getElementById("video").files[0];
+
+ if(!image || !video){
+ alert("Image aur video dono upload karo!");
+ return;
+ }
+
+ document.getElementById("status").innerText=
+ "AI engine connection abhi setup hona baaki hai!";
+}
+</script>
+
+</body>
+</html>
